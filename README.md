@@ -2,7 +2,7 @@
 
 
 🌐 Live Demo:
-👉 https://gitprofileanalyser.netlify.app/
+👉   https://gitprofileanalzser.netlify.app/
 
 ✨ Description
 📊 Analyze GitHub Profiles Like Never Before
