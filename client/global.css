@@ -3,10 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  /**
-   * Modern GitHub-themed design system
-   * All color variables expressed as HSL values for Tailwind CSS compatibility
-  */
+  
   :root {
     --background: 0 0% 100%;
     --foreground: 220 14% 11%;
@@ -79,6 +76,7 @@
     --ring: 211 100% 50%;
   }
 }
+
 
 @layer base {
   * {
