@@ -23,3 +23,9 @@ Designed with a clean, developer-focused interface that works beautifully across
 
 💡 Perfect for Developers
 A great tool to showcase your GitHub activity, enhance portfolios, or explore other developers' profiles.
+
+---
+
+## Academic Honesty & Attribution
+
+This project uses open-source libraries (React, Vite, TailwindCSS, Radix UI, lucide-react) and fetches data from the public GitHub REST API. A transparency statement including tools, templates, and assistance used is provided in `DISCLOSURE.md`. Please review and complete it before academic submission.
