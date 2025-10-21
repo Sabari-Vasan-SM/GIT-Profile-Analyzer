@@ -104,15 +104,30 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
       }
     });
 
-    // Fetch recent activity
+    // Fetch recent activity and count issues/PRs
     let recentActivity: RecentActivity[] = [];
+    let totalIssues = 0;
+    let totalPullRequests = 0;
+    
     try {
       const eventsResponse = await fetch(
-        `https://api.github.com/users/${username}/events/public?per_page=10`,
+        `https://api.github.com/users/${username}/events/public?per_page=100`,
       );
       if (eventsResponse.ok) {
         const events = await eventsResponse.json();
-        recentActivity = events.map((event: any) => {
+        
+        // Count issues and PRs from events
+        events.forEach((event: any) => {
+          if (event.type === "IssuesEvent") {
+            totalIssues++;
+          } else if (event.type === "PullRequestEvent") {
+            totalPullRequests++;
+          } else if (event.type === "PushEvent") {
+            totalPushes++;
+          }
+        });
+        
+        recentActivity = events.slice(0, 10).map((event: any) => {
           const activity: RecentActivity = {
             type: event.type,
             repo: event.repo.name,
@@ -121,7 +136,6 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
 
           // Add specific details based on event type
           if (event.type === "PushEvent") {
-            totalPushes++;
             activity.payload = {
               commits: event.payload.commits?.length || 0,
               ref: event.payload.ref,
@@ -135,7 +149,7 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
           }
 
           return activity;
-        }).slice(0, 10);
+        });
       }
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -155,9 +169,13 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
       });
     });
 
-    // Generate contribution heatmap (last 365 days)
+    // Generate contribution heatmap (last 365 days) and calculate streak
     const contributionHeatmap: ContributionDay[] = [];
     const today = new Date();
+    let currentStreak = 0;
+    let longestStreak = 0;
+    let tempStreak = 0;
+    
     for (let i = 364; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
@@ -172,6 +190,33 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
         count,
         level,
       });
+      
+      // Calculate streaks
+      if (count > 0) {
+        tempStreak++;
+        if (i === 0) { // Today or most recent day
+          currentStreak = tempStreak;
+        }
+        if (tempStreak > longestStreak) {
+          longestStreak = tempStreak;
+        }
+      } else {
+        if (i < 7) { // Within last week, continue current streak
+          // Don't reset current streak yet
+        } else {
+          tempStreak = 0;
+        }
+      }
+    }
+    
+    // Ensure current streak is calculated from the end
+    currentStreak = 0;
+    for (let i = contributionHeatmap.length - 1; i >= 0; i--) {
+      if (contributionHeatmap[i].count > 0) {
+        currentStreak++;
+      } else {
+        break;
+      }
     }
 
     const response: GitHubCommitResponse = {
@@ -195,7 +240,11 @@ export const handleGitHubUser: RequestHandler = async (req, res) => {
       totalStars,
       totalForks,
       totalPushes,
+      totalIssues,
+      totalPullRequests,
       contributionHeatmap,
+      currentStreak,
+      longestStreak,
       topRepositories,
     };
 

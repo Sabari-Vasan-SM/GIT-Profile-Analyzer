@@ -43,15 +43,6 @@ export interface ContributionDay {
 }
 
 /**
- * Contribution streak data
- */
-export interface StreakData {
-  current: number;
-  longest: number;
-  lastContributionDate?: string;
-}
-
-/**
  * Response type for GitHub user commit data
  */
 export interface GitHubCommitResponse {
@@ -87,9 +78,9 @@ export interface GitHubCommitResponse {
   totalPushes?: number;
   totalIssues?: number;
   totalPullRequests?: number;
-  totalContributions?: number;
-  streak?: StreakData;
   contributionHeatmap?: ContributionDay[];
+  currentStreak?: number;
+  longestStreak?: number;
   topRepositories?: Array<{
     name: string;
     description: string;

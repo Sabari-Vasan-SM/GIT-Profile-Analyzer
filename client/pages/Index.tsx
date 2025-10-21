@@ -25,10 +25,14 @@ import {
   Link as LinkIcon,
   Twitter,
   TrendingUp,
+  GitPullRequest,
+  AlertCircle,
 } from "lucide-react";
 import { LanguageChart } from "@/components/LanguageChart";
 import { ContributionHeatmap } from "@/components/ContributionHeatmap";
 import { ActivityFeed } from "@/components/ActivityFeed";
+import { AnimatedStatCard } from "@/components/AnimatedStatCard";
+import { StreakDisplay } from "@/components/StreakDisplay";
 
 export default function Index() {
   const [username, setUsername] = useState("");
@@ -296,72 +300,67 @@ export default function Index() {
                 </div>
               </CardContent>
             </Card>
-            {/* Stats Grid - Enhanced */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* Total Commits */}
-              <Card className="border-0 shadow-xl bg-gradient-to-br from-green-500 to-green-700 text-white">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <GitCommit className="h-8 w-8 mx-auto mb-2 opacity-90" />
-                    <p className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">
-                      Commits
-                    </p>
-                    <p className="text-3xl font-bold">
-                      {data.totalCommits.toLocaleString()}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Streak Display */}
+            {data.currentStreak !== undefined && data.longestStreak !== undefined && (
+              <StreakDisplay 
+                currentStreak={data.currentStreak} 
+                longestStreak={data.longestStreak} 
+              />
+            )}
 
-              {/* Total Pushes */}
+            {/* Animated Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <AnimatedStatCard
+                icon={GitCommit}
+                label="Total Commits"
+                value={data.totalCommits}
+                color="green"
+                delay={0}
+              />
               {data.totalPushes !== undefined && (
-                <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white">
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <TrendingUp className="h-8 w-8 mx-auto mb-2 opacity-90" />
-                      <p className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">
-                        Pushes
-                      </p>
-                      <p className="text-3xl font-bold">
-                        {data.totalPushes.toLocaleString()}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <AnimatedStatCard
+                  icon={TrendingUp}
+                  label="Total Pushes"
+                  value={data.totalPushes}
+                  color="blue"
+                  delay={100}
+                />
               )}
-
-              {/* Total Stars */}
               {data.totalStars !== undefined && (
-                <Card className="border-0 shadow-xl bg-gradient-to-br from-yellow-500 to-yellow-700 text-white">
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <Star className="h-8 w-8 mx-auto mb-2 opacity-90" />
-                      <p className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">
-                        Stars
-                      </p>
-                      <p className="text-3xl font-bold">
-                        {data.totalStars.toLocaleString()}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <AnimatedStatCard
+                  icon={Star}
+                  label="Total Stars"
+                  value={data.totalStars}
+                  color="yellow"
+                  delay={200}
+                />
               )}
-
-              {/* Total Forks */}
               {data.totalForks !== undefined && (
-                <Card className="border-0 shadow-xl bg-gradient-to-br from-purple-500 to-purple-700 text-white">
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <GitFork className="h-8 w-8 mx-auto mb-2 opacity-90" />
-                      <p className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">
-                        Forks
-                      </p>
-                      <p className="text-3xl font-bold">
-                        {data.totalForks.toLocaleString()}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <AnimatedStatCard
+                  icon={GitFork}
+                  label="Total Forks"
+                  value={data.totalForks}
+                  color="purple"
+                  delay={300}
+                />
+              )}
+              {data.totalIssues !== undefined && (
+                <AnimatedStatCard
+                  icon={AlertCircle}
+                  label="Total Issues"
+                  value={data.totalIssues}
+                  color="red"
+                  delay={400}
+                />
+              )}
+              {data.totalPullRequests !== undefined && (
+                <AnimatedStatCard
+                  icon={GitPullRequest}
+                  label="Pull Requests"
+                  value={data.totalPullRequests}
+                  color="indigo"
+                  delay={500}
+                />
               )}
             </div>
 
