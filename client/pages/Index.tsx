@@ -113,8 +113,16 @@ export default function Index() {
             >
               Continue
             </button>
-            <div className="mt-6 text-xs text-gray-500 w-full border-t pt-3 text-center">
-              Designed and developed by Sabarivasan.
+            <div className="mt-6 w-full border-t pt-3 text-center">
+              <a
+                href="https://portfolio.vasan.tech/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs text-gray-600 hover:text-primary font-medium transition-all duration-300 hover:scale-105 hover:translate-y-[-2px] relative group"
+              >
+                Designed and developed by Sabarivasan
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </a>
             </div>
           </div>
         </div>
@@ -131,7 +139,8 @@ export default function Index() {
             GitHub Profile Analyzer
           </h1>
           <p className="text-xl lg:text-2xl text-white/80 max-w-2xl mx-auto px-4">
-            Explore detailed GitHub statistics, contributions, and profile insights. Enter a username to get started.
+        About
+Uncover the story behind every commit visualize your GitHub journey beautifully.
           </p>
         </div>
 
@@ -178,6 +187,20 @@ export default function Index() {
             </form>
           </CardContent>
         </Card>
+
+        {/* Designer Credit */}
+        <div className="text-center mb-6 lg:mb-8">
+          <a
+            href="https://portfolio.vasan.tech/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm transition-all duration-300 hover:scale-105 group"
+          >
+            <span>Designed and developed by Sabarivasan</span>
+            <ExternalLink className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </a>
+        </div>
+
         {/* Error State */}
         {error && (
           <Card className="max-w-2xl mx-4 lg:mx-auto mb-6 lg:mb-8 border-destructive bg-destructive/5">
@@ -452,10 +475,21 @@ export default function Index() {
             {/* Footer Info */}
             <Card className="border-0 shadow-xl bg-white/95 backdrop-blur-sm">
               <CardContent className="pt-6">
-                <div className="text-center">
+                <div className="text-center space-y-3">
                   <p className="text-gray-600 text-sm">
                     Data fetched from the GitHub API • Showing detailed statistics and contributions
                   </p>
+                  <div>
+                    <a
+                      href="https://portfolio.vasan.tech/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary to-primary/80 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:from-primary/90 hover:to-primary/70 active:scale-95 group"
+                    >
+                      <span>Designed and developed by Sabarivasan</span>
+                      <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </a>
+                  </div>
                 </div>
               </CardContent>
             </Card>
