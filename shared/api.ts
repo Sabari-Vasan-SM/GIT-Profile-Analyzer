@@ -12,6 +12,37 @@ export interface DemoResponse {
 }
 
 /**
+ * Language statistics
+ */
+export interface LanguageStats {
+  [language: string]: number;
+}
+
+/**
+ * Recent activity/event
+ */
+export interface RecentActivity {
+  type: string;
+  repo: string;
+  action?: string;
+  createdAt: string;
+  payload?: {
+    ref?: string;
+    size?: number;
+    commits?: number;
+  };
+}
+
+/**
+ * Contribution day data for heatmap
+ */
+export interface ContributionDay {
+  date: string;
+  count: number;
+  level: number; // 0-4 intensity level
+}
+
+/**
  * Response type for GitHub user commit data
  */
 export interface GitHubCommitResponse {
@@ -33,6 +64,31 @@ export interface GitHubCommitResponse {
   created_at?: string;
   followers?: number;
   following?: number;
+  location?: string;
+  company?: string;
+  blog?: string;
+  twitter_username?: string;
+  hireable?: boolean;
+  
+  // Extended data
+  languages?: LanguageStats;
+  recentActivity?: RecentActivity[];
+  totalStars?: number;
+  totalForks?: number;
+  totalPushes?: number;
+  totalIssues?: number;
+  totalPullRequests?: number;
+  contributionHeatmap?: ContributionDay[];
+  currentStreak?: number;
+  longestStreak?: number;
+  topRepositories?: Array<{
+    name: string;
+    description: string;
+    stars: number;
+    forks: number;
+    language: string;
+    url: string;
+  }>;
 }
 
 /**
